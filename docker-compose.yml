@@ -1,0 +1,39 @@
+services:
+  backend:
+    build: .
+    volumes:
+      - ./backend:/app
+    tty: true
+    ports:
+      - 3001:3000
+      - 5555:5555 #prisma studio
+    env_file:
+      - ./env.env
+    
+  frontend:
+    build: .
+    volumes:
+      - ./frontend:/app
+    tty: true
+    ports:
+      - 3000:3000
+    env_file:
+      - ./env.env
+
+  db:
+    image: postgres:15.2
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - ./env.env
+
+  solana-file-wallet:
+    build: 
+      dockerfile: ./SolanaFileWallet.Dockerfile
+    tty: true
+    env_file:
+      - ./env.env
+    volumes:
+      - ./solana-file-wallet/collection:/root/collection

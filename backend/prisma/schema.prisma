@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model NFT {
+  id           Int           @id @default(autoincrement())
+  name         String
+  symbol       String
+  price        Decimal       @db.Decimal(12, 2)
+  chain        Chain         @default(Solana)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  soldAt       DateTime?
+  image        String?
+  description  String?
+  attributes   Json?
+  mint         String        @unique
+  thumbnail    String?
+  status       NFTStatus     @default(Available)
+  transactions Transaction[]
+  transfers    Transfer[]
+}
+
+model Transaction {
+  id               Int        @id @default(autoincrement())
+  externalTxnId    String?    @unique
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  deletedAt        DateTime?
+  buyerEmail       String?
+  paymentTimestamp DateTime?
+  response         String?
+  nftId            Int
+  paymentIntent    String     @unique
+  status           TxnStatus  @default(Pending)
+  nftPrice         Decimal    @db.Decimal(12, 2)
+  saleCurrency     String     @default("USD")
+  salePrice        Decimal    @db.Decimal(12, 2)
+  wallet           String?
+  nft              NFT        @relation(fields: [nftId], references: [id])
+  transfers        Transfer[]
+}
+
+model Transfer {
+  id             Int         @id @default(autoincrement())
+  chain          Chain       @default(Solana)
+  signature      String?
+  fromWallet     String
+  toWallet       String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  response       String?
+  transactionsId Int
+  nftId          Int
+  status         TxnStatus   @default(Pending)
+  nft            NFT         @relation(fields: [nftId], references: [id])
+  transaction    Transaction @relation(fields: [transactionsId], references: [id])
+}
+
+enum TxnStatus {
+  Success
+  Failed
+  Pending
+  Processing
+}
+
+enum Chain {
+  Solana
+  Ethereum
+}
+
+enum NFTStatus {
+  Sold
+  Available
+  Reserved
+}

@@ -1,0 +1,5 @@
+node_modules
+
+#solana collection
+solana-file-wallet/collection/assets/
+sugar.log
