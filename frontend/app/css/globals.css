@@ -18,3 +18,7 @@ body{
 }
 
 @import 'tailwindcss/utilities';
+
+html.embed header{
+  display: none;
+}

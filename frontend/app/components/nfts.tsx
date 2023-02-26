@@ -17,7 +17,6 @@ async function getNFTs() {
         throw new Error("Failed to connect to backend");
       }
     });
-  console.log(nfts);
   return nfts;
 }
 

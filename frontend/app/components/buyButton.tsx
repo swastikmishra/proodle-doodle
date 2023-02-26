@@ -1,16 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import ModalComponent from "./popups/ModalComponent";
+import WalletConfirmation from "./popups/WalletConfirmation";
+import { useRouter } from 'next/navigation';
 
 export default function (props) {
-  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+  const [showConnectWalletPopup, setConnectWalletPopup] = useState(false);
+
+  const onWalletSkip = () => {
+    if(props.nft.id)
+      router.push(`/nfts/${props.nft.id}/checkout`)
+  }
+
+  const onWalletConnect = () => {
+    console.log("Wallet Connection Clicked")
+  }
 
   const openModal = () => {
     setTimeout(() => {
-      setShowModal(false);
+      setConnectWalletPopup(false)
       setTimeout(() => {
-        setShowModal(true);
+        setConnectWalletPopup(true)
       }, 10);
     }, 10);
   };
@@ -24,7 +35,9 @@ export default function (props) {
     </button>
   ) : (
     <>
-      <div>{showModal && <ModalComponent />}</div>
+      {showConnectWalletPopup && (
+        <WalletConfirmation onSkip={onWalletSkip} onConnect={onWalletConnect} isOpen={showConnectWalletPopup} onClose={() => setConnectWalletPopup(false)} />
+      )}
       <button
         onClick={openModal}
         type="button"

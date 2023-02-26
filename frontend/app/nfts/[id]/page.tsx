@@ -3,13 +3,6 @@ import BuyButton from "@/app/components/buyButton";
 import NftOnChainData from "@/app/components/nftOnChainData";
 import Image from "next/image";
 
-export async function generateMetadata(params) {
-  console.log(params);
-  return;
-  const nft = await getNft(params.id);
-  return { title: nft.name };
-}
-
 export async function getNft(nftId: number) {
   let nft;
   await fetch(`http://172.17.0.1:3001/nfts/${nftId}`)

@@ -1,25 +1,8 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
+"use client";
+
 import { Dialog, Transition } from "@headlessui/react";
-
-export default function ModalComponent() {
-  const [isBrowser, setIsBrowser] = useState(false);
-
-  useEffect(() => {
-    setIsBrowser(true);
-  }, []);
-
-  if (isBrowser) {
-    return ReactDOM.createPortal(
-      <CheckoutPopup isOpen={true} />,
-      document.getElementById("modal-root")!
-    );
-  } else {
-    return null;
-  }
-}
-
-export function CheckoutPopup(props) {
+import { Fragment, useEffect, useState } from "react";
+export default function (props) {
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
@@ -61,22 +44,28 @@ export function CheckoutPopup(props) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Payment successful
+                  Do you want to connect a Solana wallet?
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Your payment has been successfully submitted. We’ve sent you
-                    an email with all of the details of your order.
+                    If you don't want to connect, the NFT will be dumped into an file wallet, and you can see the NFT post checkout.
                   </p>
                 </div>
 
-                <div className="mt-4">
+                <div className="flex justify-between mt-4">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                    onClick={() => { setIsOpen(false); props.onSkip() }}
+                  >
+                    Skip Wallet
+                  </button>
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => { setIsOpen(false); props.onConnect() }}
                   >
-                    Got it, thanks!
+                    Connect Wallet
                   </button>
                 </div>
               </Dialog.Panel>

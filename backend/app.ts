@@ -22,6 +22,20 @@ const app = fastify();
 
 const appPort = parseInt(process.env.BACKEND_PORT!);
 
+app.addHook("preHandler", (req, res, done) => {
+  // example logic for conditionally adding headers
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "ANY");
+  res.header("Access-Control-Allow-Headers", "*");
+
+  const isPreflight = /options/i.test(req.method);
+  if (isPreflight) {
+    return res.send();
+  }
+
+  done();
+});
+
 app.get(
   "/nfts",
   async (
@@ -120,7 +134,6 @@ app.post(
           transactionId: transaction.id,
           client_secret: paymentIntent.client_secret,
         });
-
       else throw new Error("Failed to create payment intent");
     } catch (error) {
       console.error(error);
