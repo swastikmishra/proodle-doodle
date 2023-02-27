@@ -32,15 +32,18 @@
 - Frontend
 	- To start Nextjs Server: `pm2 start yarn --name "nextjs" --interpreter bash -- start`
 - Backend: 
+	- Push schema to db: `yarn prisma db push`
 	- To start Fastify Server: `pm2 start yarn --name "app" --interpreter bash -- ts-node app.ts`
 - Importing NFTs from Wallet
 	- Run the script `syncWalletNFTs.ts` inside `backend` folder.
-	- Or you can import the NFTs from the `nfts.sql` file present in the root folder.
+	- Or you can import the NFTs from the `schema.sql` file present in the root folder.
 
 
 https://github.com/solana-labs/wallet-adapter/issues/694
 
 ### Screenshots
+
+
 
 
 ### Objectives
