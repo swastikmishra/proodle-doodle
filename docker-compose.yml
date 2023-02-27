@@ -5,8 +5,7 @@ services:
       - ./backend:/app
     tty: true
     ports:
-      - 3001:3000
-      - 5555:5555 #prisma studio
+      - 3000:3000
     env_file:
       - ./env.env
     
@@ -16,7 +15,7 @@ services:
       - ./frontend:/app
     tty: true
     ports:
-      - 3000:3000
+      - 80:80
     env_file:
       - ./env.env
 

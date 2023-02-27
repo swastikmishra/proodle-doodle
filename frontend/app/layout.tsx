@@ -13,11 +13,21 @@ export const rubik = Rubik({
   variable: "--font-rubik",
 });
 
-export default function RootLayout({
+async function getCurrentRate(){
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/current-rate`)
+    .then(res => res.json())
+    .then(res => {
+        if(res.status)
+            return res.response.data
+    })
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const CURRENT_RATE = await getCurrentRate()
   return (
     <html className={`${inter.variable} ${rubik.variable} dark`} lang="en">
       {/*
@@ -25,8 +35,12 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head>
-        <Script src="/theme.js"></Script>
-        <Script src="/currentRate.js"></Script>
+	<Script id="show-banner" strategy="beforeInteractive">
+		{`const CURRENT_RATE = "${CURRENT_RATE}";
+		  const API_URL="${process.env.NEXT_PUBLIC_API_URL}";`}
+	</Script>
+        <Script src="/theme.js"  strategy="beforeInteractive"></Script>
+        <Script src="/currentRate.js"  strategy="beforeInteractive"></Script>
       </head>
       <body className="bg-gray-100 dark:bg-gray-700 pt-12">
         <Header />

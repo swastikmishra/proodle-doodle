@@ -8,9 +8,9 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
-const STRIPE_API_KEY = "pk_test_gfSLbLXSv8WNgPehTGc9zeCq";
+//const STRIPE_API_KEY = "pk_test_gfSLbLXSv8WNgPehTGc9zeCq";
+const STRIPE_API_KEY = process.env.NEXT_PUBLIC_STRIPE_API_KEY!;
 const stripePromise = loadStripe(STRIPE_API_KEY);
-// const STRIPE_API_KEY = process.env.STRIPE_API_KEY!;
 
 export function CheckoutForm(props) {
   const stripe = useStripe();

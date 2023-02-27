@@ -1,4 +1,5 @@
 import TransactionStatus from "./TransactionStatus";
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Transaction Status",
