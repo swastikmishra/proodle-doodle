@@ -60,6 +60,3 @@ Checkout Page
 
 Transaction Confirmation
 ![Transaction page](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/Transaction.png)
-
-### Objectives
- 
