@@ -42,11 +42,23 @@
 https://github.com/solana-labs/wallet-adapter/issues/694
 
 ### Screenshots
+
+Homepage
 ![Homepage](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/Homepage.png)
+
+Homepage 2
 ![Homepage 2](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/Homepage%202.png)
+
+Homepage Light
 ![Homepage Light](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/Homepage-Light.png)
+
+NFT Page
 ![NFT page](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/NFT%20Page.png)
+
+Checkout Page
 ![Checkout page](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/Checkout%20Page.png)
+
+Transaction Confirmation
 ![Transaction page](https://raw.githubusercontent.com/swastikmishra/proodle-doodle/master/screenshots/Transaction.png)
 
 ### Objectives
