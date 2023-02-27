@@ -6,6 +6,7 @@
 - Solana File Wallet (Source, EQ2bqDkwX62exkHHp4sVGDJgpuyTHVgFXR9BfmU3tyA4): https://www.solaneyes.com/address/EQ2bqDkwX62exkHHp4sVGDJgpuyTHVgFXR9BfmU3tyA4
 - Solana File Wallet (Dump, CecaX9w6J6KLSSA7cP2NKQATQXfBzQHPqCEyJ8msFQGY): https://www.solaneyes.com/address/CecaX9w6J6KLSSA7cP2NKQATQXfBzQHPqCEyJ8msFQGY
 - Solana Dummy CandyMachine (CandyMachine V2): https://www.solaneyes.com/address/9WwdpqXgYcCGyLzvkRFVBHz1UCD6axKKniDHgNGGJRQg
+- Solana Cluster: [devnet](https://docs.solana.com/clusters). Select *devnet* in www.solaneyes.com as well.
 
 ### Tech Stack Used
 - Deployment: The app is currently deployed on AWS Lightsaill instance.
