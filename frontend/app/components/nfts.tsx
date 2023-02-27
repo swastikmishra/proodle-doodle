@@ -4,10 +4,11 @@ import NFTsSkeleton from "./nftsSkeleton";
 import Link from "next/link";
 import Price from "@/app/components/price";
 import BuyButton from "./buyButton";
+export const dynamic = 'force-dynamic';
 async function getNFTs() {
   let nfts;
   let pagination;
-  await fetch(`http://172.17.0.1:3001/nfts?nextPage=1&offset=20`)
+  await fetch(`${process.env.BACKEND_URL}/nfts?nextPage=1&offset=100`)
     .then((res) => res.json())
     .then((res) => {
       if (res.status == true) {
@@ -50,16 +51,22 @@ export default async function () {
                           {nft.name}
                         </Link>
                       </h3>
-                      <div className="flex flex-row justify-between">
+                      <div className="flex flex-column justify-between">
                         <span className="text-gray-500 dark:text-gray-400">
                           {nft.chain}
                         </span>
-                        <Price price={nft.price} symbol={nft.symbol}/>
                       </div>
-                      <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400 h-[100px]">
+                      <div>
+                        <Price price={nft.price} symbol={nft.symbol} />
+                      </div>
+                      <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400 truncate">
                         {nft.description}
                       </p>
-                      <BuyButton nft={nft} buyNowText={"Buy Now"} soldMessage={"Sold Already"}></BuyButton>
+                      <BuyButton
+                        nft={nft}
+                        buyNowText={"Buy Now"}
+                        soldMessage={"Sold Out"}
+                      ></BuyButton>
                     </div>
                   </div>
                 );

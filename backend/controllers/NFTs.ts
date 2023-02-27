@@ -5,7 +5,7 @@ export const getNFTs = async (from: number, offset: number) => {
   return await prisma.nFT.findMany({
     skip: from,
     take: offset,
-    orderBy: [{ id: "desc" }, { status: "asc" }],
+    orderBy: [{ id: "desc" }],
     select: {
       id: true,
       mint: true,

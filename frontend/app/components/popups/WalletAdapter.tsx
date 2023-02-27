@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FC, useMemo } from "react";
 import {
   ConnectionProvider,
@@ -11,20 +13,16 @@ import {
   WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
-import {
-    MdAccountBalanceWallet,
-  } from "react-icons/md";
 
 // Default styles that can be overridden by your app
 require("@solana/wallet-adapter-react-ui/styles.css");
 
-export const Wallet: FC = () => {
+export const Wallet: FC = (props) => {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
   const network = WalletAdapterNetwork.Devnet;
 
   // You can also provide a custom RPC endpoint.
-  // const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  const endpoint = process.env.SOLANA_CLUSTER_RPC!;
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
   const wallets = useMemo(
     () => [
@@ -50,9 +48,8 @@ export const Wallet: FC = () => {
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          <WalletMultiButton />
-          <WalletDisconnectButton />
-          {/* Your app's components go here, nested within the context providers. */}
+          <WalletMultiButton className="text-white bg-blue-500 inline-flex items-center dark:text-white hover:bg-blue-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-gray-800" />
+          {props.children ? props.children : <></>}
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

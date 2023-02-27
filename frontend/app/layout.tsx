@@ -26,6 +26,7 @@ export default function RootLayout({
       */}
       <head>
         <Script src="/theme.js"></Script>
+        <Script src="/currentRate.js"></Script>
       </head>
       <body className="bg-gray-100 dark:bg-gray-700 pt-12">
         <Header />

@@ -11,11 +11,13 @@ import {
 import { sendResponse } from "./helpers/Response.js";
 import { getNFT, getNFTs } from "./controllers/NFTs.js";
 import {
+  confirmAndCapturePayment,
   createPaymentIntent,
   validateNFTCheckout,
 } from "./controllers/Checkout.js";
 import Stripe from "stripe";
 import { getTransaction } from "./controllers/Transaction.js";
+import { getCurrentRate } from "./helpers/PriceConverter.js";
 
 const prisma = new PrismaClient();
 const app = fastify();
@@ -133,6 +135,8 @@ app.post(
         sendResponse(reply, {
           transactionId: transaction.id,
           client_secret: paymentIntent.client_secret,
+          transactionAmount: transaction.salePrice,
+          transactionCurrency: transaction.saleCurrency,
         });
       else throw new Error("Failed to create payment intent");
     } catch (error) {
@@ -160,6 +164,10 @@ app.post(
         return sendResponse(reply, "No Transaction Found", true, 404);
       }
 
+      if (transaction.paymentIntent != intent) {
+        return sendResponse(reply, "Invalid Request", true, 400);
+      }
+
       const nft: NFT | null = await getNFT(+transaction.nftId);
 
       if (!nft) {
@@ -174,6 +182,15 @@ app.post(
           "NFT not available for sale anymore. You card hasn't been charged.",
           true
         );
+      }
+
+      try {
+        await confirmAndCapturePayment(transaction, intent, nft);
+        let updatedTransaction = await getTransaction(transaction.id);
+        return sendResponse(reply, { data: updatedTransaction });
+      } catch (err) {
+        console.error(err);
+        return sendResponse(reply, "Failed to confirm payment", true, 500);
       }
     } catch (error) {
       console.error(error);
@@ -198,10 +215,51 @@ app.get(
       if (!transaction) {
         return sendResponse(reply, "No Transaction Found", true, 404);
       }
+
+      let response = await prisma.transaction.findUnique({
+        where: {
+          id: transaction.id,
+        },
+        select: {
+          id: true,
+          paymentTimestamp: true,
+          nftId: true,
+          status: true,
+          nftPrice: true,
+          saleCurrency: true,
+          salePrice: true,
+          nft: {
+            select: {
+              id: true,
+              name: true,
+              symbol: true,
+              price: true,
+              chain: true,
+              description: true,
+              mint: true,
+              thumbnail: true,
+            },
+          },
+          transfers: true,
+        },
+      });
+
+      return sendResponse(reply, { data: response });
     } catch (error) {
       console.error(error);
       return sendResponse(reply, "Failed to confirm payment", true, 500);
     }
+  }
+);
+
+app.get(
+  "/current-rate",
+  async (
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) => {
+    let data = await getCurrentRate("SOL", "USD")
+    return sendResponse(reply, {data: data});
   }
 );
 

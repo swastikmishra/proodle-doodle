@@ -7,7 +7,7 @@ import {
 } from "@prisma/client";
 import Stripe from "stripe";
 import { convertCurrency } from "../helpers/PriceConverter.js";
-import { updateNFTStatus } from "./NFTs.js";
+import { getNFT, updateNFTStatus } from "./NFTs.js";
 import {
   createTransactionEntry,
   updateTransactionStatus,
@@ -57,13 +57,13 @@ export const createPaymentIntent = async (
   }
 
   try {
-    let salePrice: number = convertCurrency(+nft.price, nft.chain, currency);
+    let salePrice: number = await convertCurrency(+nft.price, nft.symbol, currency);
     let paymentIntentParams: Stripe.PaymentIntentCreateParams = {
-      amount: salePrice * 100,
+      amount: +(salePrice * 100).toFixed(0),
       currency: currency,
       automatic_payment_methods: { enabled: true },
       description: `Purchase of ${nft.name}`,
-      capture_method: "automatic", //we will capture, post card details are verified
+      capture_method: "manual", //we will capture, post card details are verified
     };
     if (stripeCustomer!) {
       paymentIntentParams.customer = stripeCustomer.id;
@@ -91,25 +91,10 @@ export const createPaymentIntent = async (
 };
 
 export const confirmAndCapturePayment = async (
-  nft: NFT,
-  intent: string
+  transaction: Transaction,
+  intent: string,
+  nft: NFT
 ): Promise<boolean> => {
-  let transaction: Transaction | null;
-  try {
-    transaction = await prisma.transaction.findFirst({
-      where: {
-        nftId: nft.id,
-        paymentIntent: intent,
-      },
-    });
-    if (!transaction) {
-      throw new Error("Transaction not found");
-    }
-  } catch (err) {
-    console.error(err);
-    throw new Error("Transaction not found");
-  }
-
   let paymentIntent: Stripe.PaymentIntent | null;
   try {
     paymentIntent = await stripeClient.paymentIntents.retrieve(intent);

@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
+
 export default function (props) {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -48,7 +49,8 @@ export default function (props) {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    If you don't want to connect, the NFT will be dumped into an file wallet, and you can see the NFT post checkout.
+                    If you don't want to connect, the NFT will be dumped into an
+                    file wallet, and you can see the NFT post checkout.
                   </p>
                 </div>
 
@@ -56,14 +58,20 @@ export default function (props) {
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                    onClick={() => { setIsOpen(false); props.onSkip() }}
+                    onClick={() => {
+                      setIsOpen(false);
+                      props.onSkip();
+                    }}
                   >
                     Skip Wallet
                   </button>
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={() => { setIsOpen(false); props.onConnect() }}
+                    onClick={() => {
+                      setIsOpen(false);
+                      props.onConnect();
+                    }}
                   >
                     Connect Wallet
                   </button>

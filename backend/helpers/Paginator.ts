@@ -3,7 +3,7 @@ import { RequestGetNFTsQuery } from "./RequestType";
 export const getPaginationFromQuery = (query: RequestGetNFTsQuery) => {
   let offset: number = 30;
   let nextPage: number = 1;
-  const MAX_OFFSET = 50;
+  const MAX_OFFSET = 100;
 
   if (query.offset) {
     query.offset = +query.offset;

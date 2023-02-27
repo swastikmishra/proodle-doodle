@@ -2,10 +2,12 @@ import BreadCrumbs from "@/app/components/breadCrumbs";
 import BuyButton from "@/app/components/buyButton";
 import NftOnChainData from "@/app/components/nftOnChainData";
 import Image from "next/image";
+import Price from "@/app/components/price";
+export const dynamic = 'force-dynamic';
 
 export async function getNft(nftId: number) {
   let nft;
-  await fetch(`http://172.17.0.1:3001/nfts/${nftId}`)
+  await fetch(`${process.env.BACKEND_URL}/nfts/${nftId}`)
     .then((res) => res.json())
     .then((res) => {
       if (res.status == true) {
@@ -39,18 +41,12 @@ export default async function ({ params }) {
             <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
               {nft.description}
             </p>
-            <p className="text-gray-500 dark:text-white mb-6">
-              Price: {"  "}
-              <span className="text-teal-500 font-bold">
-                {nft.price} {nft.symbol}
-              </span>{" "}
-              -{" "}
-              <span className="text-green-500 font-bold">{nft.price} USD</span>
-            </p>
+            <Price price={nft.price} symbol={nft.symbol} />
+            <br/>
             <BuyButton
               nft={nft}
               buyNowText={"Buy Now"}
-              soldMessage={"Sold Already"}
+              soldMessage={"Sold Out"}
             ></BuyButton>
           </div>
         </div>

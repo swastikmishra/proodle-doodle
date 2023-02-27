@@ -25,10 +25,14 @@ export const SolanaTransferNFT = async (
 
   const nft: Nft = (await metaplex.nfts().findByMint({ mintAddress })) as Nft;
 
-  metaplex.nfts().transfer({
-    nftOrSft: nft,
-    authority: keypair,
-    fromOwner: sourceWallet,
-    toOwner: destinationWallet,
-  });
+  try{
+    return await metaplex.nfts().transfer({
+      nftOrSft: nft,
+      authority: keypair,
+      fromOwner: sourceWallet,
+      toOwner: destinationWallet,
+    });
+  }catch(err){
+    return null;
+  }
 };

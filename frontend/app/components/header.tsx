@@ -23,18 +23,17 @@ export default function () {
             >
               <HiOutlineCurrencyDollar className="mr-2" /> USD
             </button>
-            <button className="text-white bg-blue-500 inline-flex items-center dark:text-white hover:bg-blue-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-gray-800">
+            {/* <button className="text-white bg-blue-500 inline-flex items-center dark:text-white hover:bg-blue-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-gray-800">
               <MdAccountBalanceWallet className="mr-2" /> Connect Wallet
-            </button>
+            </button> */}
+            <Wallet/>
             <button
-              href="#"
               className="hidden text-gray-800 text-lg dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               id="theme-toggle-dark-icon"
             >
               <MdOutlineLightMode />
             </button>
             <button
-              href="#"
               className="hidden text-gray-800 text-lg dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
               id="theme-toggle-light-icon"
             >

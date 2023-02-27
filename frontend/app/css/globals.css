@@ -19,6 +19,10 @@ body{
 
 @import 'tailwindcss/utilities';
 
+html.embed body{
+  padding-top: 0 !important;
+  background: rgba(0,0,0,0.5) !important;
+}
 html.embed header{
   display: none;
 }

@@ -7,8 +7,8 @@ import { Metaplex } from "@metaplex-foundation/js";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import { CgMediaLive } from "react-icons/cg";
 
-export default function (props: object) {
-  const [nft, setNFT] = useState(null);
+export default function (props: any) {
+  const [nft, setNFT] = useState();
 
   //   const connection = new Connection(process.env.SOLANA_CLUSTER_RPC!);
   const connection = new Connection(clusterApiUrl("devnet"));
