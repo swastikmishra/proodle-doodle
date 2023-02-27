@@ -38,8 +38,8 @@
 	- Run the script `syncWalletNFTs.ts` inside `backend` folder.
 	- Or you can import the NFTs from the `schema.sql` file present in the root folder.
 
-
-https://github.com/solana-labs/wallet-adapter/issues/694
+### Issues
+- Solana Wallet Adapter doesn't build in Nextjs 13 (Experimental version) : https://github.com/solana-labs/wallet-adapter/issues/694
 
 ### Screenshots
 
